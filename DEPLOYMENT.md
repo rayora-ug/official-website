@@ -56,7 +56,7 @@ This ensures visitors reach your site whether they type:
 
 The site is configured with:
 - **Framework**: Next.js 15.3.4
-- **Build Command**: `npm run build`
+- **Build Command**: `npm install && npm run build`
 - **Publish Directory**: `.next`
 - **Node Version**: 18.x (specified in `netlify.toml`)
 - **Redirects**: Configured for SPA routing
@@ -95,29 +95,34 @@ If the contact form doesn't send emails:
 ### **Build Failures (Exit Code 2)**
 If you see "Build script returned non-zero exit code: 2":
 
-1. **Check Node.js Version**:
+1. **npm ci Error - package-lock.json missing**:
+   - Error: "The `npm ci` command can only install with an existing package-lock.json"
+   - **Solution**: Build command changed to `npm install && npm run build`
+   - This is more reliable for Netlify deployments
+
+2. **Check Node.js Version**:
    - Netlify should use Node.js 18.x (specified in `netlify.toml`)
    - If using a different version, update the `NODE_VERSION` in build environment
 
-2. **Clear Netlify Cache**:
+3. **Clear Netlify Cache**:
    - Go to Netlify dashboard → Site settings → Build & deploy
    - Click "Clear cache and deploy site"
 
-3. **Verify Package Dependencies**:
+4. **Verify Package Dependencies**:
    - Ensure all dependencies are properly listed in `package.json`
    - Check for any missing peer dependencies
 
-4. **Check Build Environment Variables**:
+5. **Check Build Environment Variables**:
    - Environment variables might be missing or incorrectly set
    - Verify `RESEND_API_KEY` is set (even if not used during build)
 
-5. **Try Manual Deploy with Debug**:
+6. **Try Manual Deploy with Debug**:
    ```bash
-   # In Netlify build settings, temporarily change build command to:
-   npm ci && npm run build --verbose
+   # In Netlify build settings, the build command should be:
+   npm install && npm run build
    ```
 
-6. **Branch Issues**:
+7. **Branch Issues**:
    - Ensure you're deploying from the correct branch (`main`)
    - Check that the latest commits are pushed to the repository
 
