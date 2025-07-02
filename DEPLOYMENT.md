@@ -35,9 +35,22 @@ Add these environment variables in Netlify:
 
 ### Step 5: DNS Configuration
 Point your domain DNS to Netlify:
-- **A Record**: `75.2.60.5`
-- **AAAA Record**: `2600:1f14:bab:c400::5`
+- **A Record**: `75.2.60.5` (for rayora.de)
+- **AAAA Record**: `2600:1f14:bab:c400::5` (for rayora.de)
 - **CNAME**: `www.rayora.de` → `your-site-name.netlify.app`
+
+**Note**: Both `rayora.de` and `www.rayora.de` will work. Netlify automatically handles redirects between them. You can choose which one to use as primary in Netlify's domain settings.
+
+### Step 6: Domain Redirect Configuration (Optional)
+In Netlify's domain settings, you can choose:
+- **Primary domain**: `rayora.de` (recommended - shorter, cleaner)
+- **Automatic redirect**: `www.rayora.de` → `rayora.de`
+
+This ensures visitors reach your site whether they type:
+- `rayora.de` ✅
+- `www.rayora.de` ✅ (redirects to rayora.de)
+- `https://rayora.de` ✅
+- `https://www.rayora.de` ✅ (redirects to https://rayora.de)
 
 ## 🔧 Build Configuration
 
