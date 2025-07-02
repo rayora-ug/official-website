@@ -1,36 +1,123 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Rayora Website
 
-## Getting Started
+Modern, responsive website for Rayora UG built with Next.js and Tailwind CSS.
 
-First, run the development server:
+## 🚀 Live Site
+- **Production**: `https://rayora.de`
+- **Staging**: TBD
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🛠 Tech Stack
+- **Framework**: Next.js 15.3.4
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS 3.4.0
+- **Email**: Resend API
+- **Deployment**: Netlify
+- **Version Control**: Git
+
+## 📋 Features
+- ✅ Responsive design (desktop, tablet, mobile)
+- ✅ Modern UI with smooth animations
+- ✅ Contact form with email integration
+- ✅ SEO optimized
+- ✅ Active navigation highlighting
+- ✅ Error boundaries and 404 handling
+- ✅ TypeScript for type safety
+- ✅ ESLint for code quality
+
+## 🏗 Project Structure
+```
+├── src/
+│   ├── app/                 # Next.js App Router
+│   │   ├── about/          # About page
+│   │   ├── consulting/     # Consulting page
+│   │   ├── contact/        # Contact page
+│   │   ├── solutions/      # Solutions page
+│   │   ├── api/           # API routes
+│   │   └── layout.tsx     # Root layout
+│   ├── components/        # Reusable components
+│   └── styles/           # Global styles
+├── public/               # Static assets
+├── netlify.toml         # Netlify configuration
+└── package.json         # Dependencies
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Getting Started
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Prerequisites
+- Node.js 18+
+- npm or yarn
+- Git
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Installation
+```bash
+# Clone the repository
+git clone https://github.com/rayora-ug/rayora-website.git
+cd rayora-website
 
-## Learn More
+# Install dependencies
+npm install
 
-To learn more about Next.js, take a look at the following resources:
+# Set up environment variables
+cp .env.local.example .env.local
+# Edit .env.local with your configuration
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Run development server
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Development Commands
+```bash
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run start        # Start production server
+npm run lint         # Run ESLint
+```
 
-## Deploy on Vercel
+## 🌐 Deployment
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Netlify (Recommended)
+1. Connect repository to Netlify
+2. Set build command: `npm run build`
+3. Set environment variables
+4. Deploy automatically on push to main
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Manual Deployment
+```bash
+npm run build
+npm run start
+```
+
+## 📧 Contact Form Setup
+The contact form uses Resend API. Configure:
+1. Sign up at [resend.com](https://resend.com)
+2. Add your API key to `.env.local`
+3. Verify your domain for email sending
+
+## 🔧 Configuration Files
+- `next.config.ts` - Next.js configuration
+- `tailwind.config.js` - Tailwind CSS configuration
+- `netlify.toml` - Netlify deployment settings
+- `tsconfig.json` - TypeScript configuration
+
+## 📱 Browser Support
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
+
+## 🤝 Contributing
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## 📄 License
+© 2025 Rayora UG. All rights reserved.
+
+## 🐛 Issues & Support
+For issues or questions, please contact the development team.
+
+---
+
+**Built with ❤️ by the Rayora team**
