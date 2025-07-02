@@ -1,155 +1,166 @@
-// FILE: src/app/consulting/page.tsx
-// This file defines the Consulting page.
-// To make this page CMS-driven:
-// 1. Define a "Consulting Service" content type in your headless CMS.
-//    Fields could include: id (slug), icon (media/text), title, description, points (repeatable text/rich text), imagePlaceholder (media).
-// 2. Define a "Success Story" or "Case Study" content type.
-//    Fields could include: title, summary, linkToFullStory (optional).
-// 3. Fetch this data similarly to the Solutions page, using async functions within the Server Component
-//    or a child Server Component for App Router.
-//    Example for consulting services:
-//    async function getConsultingServices() {
-//      const res = await fetch('YOUR_CMS_API_ENDPOINT/consulting-services', { next: { revalidate: 3600 } });
-//      if (!res.ok) throw new Error('Failed to fetch consulting services');
-//      return res.json();
-//    }
-//    And then in the ConsultingPage component:
-//    const consultingServices = await getConsultingServices();
-//    The page currently uses hardcoded `consultingServices` and placeholder success stories.
-//    These are structured for easy replacement with CMS data.
+// src/app/consulting/page.tsx
+import Link from "next/link";
 
-import React from 'react';
-import AnimatedSection from '@/components/AnimatedSection';
-import Button from '@/components/Button';
-
-// Heroicons for Consulting Page
-const ArrowsPointingInIconConsulting = () => ( // For Digital Transformation
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-12 h-12 text-rayora-accent-amber">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9 9V4.5M9 9H4.5M9 9L3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5M15 15l5.25 5.25" />
-    </svg>
+// Icon components
+const ChartBarIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+  </svg>
 );
 
-const LightBulbIconConsulting = () => ( // For Knowledge Management
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-12 h-12 text-rayora-teal-primary">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.354a15.055 15.055 0 01-4.5 0M12 3v2.25m0 0c-1.47.011-2.882.283-4.22.75M12 5.25c1.47.011 2.882.283 4.22.75m0 0A6.01 6.01 0 0112 12a6.01 6.01 0 01-4.22-6m4.22 6a6.013 6.013 0 00-4.22-6M15 18a3 3 0 10-6 0c0 .794.257 1.524.699 2.146H14.3c.442-.622.699-1.352.699-2.146z" />
-    </svg>
+const AcademicCapIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5" />
+  </svg>
 );
 
-const CheckCircleIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0">
-        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-    </svg>
+const CubeIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
+    <path strokeLinecap="round" strokeLinejoin="round" d="m21 7.5-9-5.25L3 7.5m18 0-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
+  </svg>
 );
 
-const consultingServices = [
-  {
-    id: 'digital-transformation',
-    icon: <ArrowsPointingInIconConsulting />,
-    title: 'Digital Transformation Advisory',
-    description: 'In today\'s fast-paced digital landscape, staying competitive requires continuous evolution. Our Digital Transformation Advisory services help you navigate complexity, identify opportunities, and implement strategies that leverage technology to fundamentally change how your business operates and delivers value.',
-    points: [
-      'Comprehensive digital maturity assessment & gap analysis.',
-      'Strategic roadmap development for phased digital initiatives.',
-      'Expert guidance on technology stack selection and integration.',
-      'Effective change management and organizational alignment strategies.',
-      'KPI definition, impact measurement, and continuous optimization cycles.',
-    ],
-    imagePlaceholder: '/assets/illustrations/digital-transformation-placeholder.svg',
-  },
-  {
-    id: 'knowledge-management',
-    icon: <LightBulbIconConsulting />,
-    title: 'Knowledge Management Strategies',
-    description: 'Your organization\'s knowledge is one of its most valuable assets. We help you implement effective Knowledge Management Strategies to capture, store, share, and utilize this knowledge. Our goal is to foster a culture of learning and collaboration, improving efficiency and driving innovation.',
-    points: [
-      'Thorough knowledge audit, flow analysis, and mapping.',
-      'Design and implementation of centralized knowledge bases and intranets.',
-      'Development of communities of practice and expert locator systems.',
-      'Selection and deployment of tools for knowledge capture and dissemination.',
-      'Frameworks for measuring the ROI of knowledge management initiatives.',
-    ],
-    imagePlaceholder: '/assets/illustrations/knowledge-management-placeholder.svg',
-  }
-];
+const RocketLaunchIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.448 14.9 14.9 0 01.06-.312m-2.24 2.39a4.493 4.493 0 00-1.757 4.306 4.493 4.493 0 004.306-1.758M16.5 9a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
+  </svg>
+);
 
-const ConsultingPage = () => {
+export default function ConsultingPage() {
+  const consultingServices = [
+    {
+      title: "Digital Strategy",
+      description: "We work with you to define and execute a technology roadmap that aligns with your business goals and unlocks growth.",
+      icon: <ChartBarIcon />,
+      features: ["Technology Assessment", "Roadmap Planning", "Risk Analysis", "ROI Optimization"]
+    },
+    {
+      title: "E-Learning Implementation",
+      description: "From content structuring to platform integration, we guide you in launching effective digital education environments.",
+      icon: <AcademicCapIcon />,
+      features: ["LMS Setup", "Content Migration", "User Training", "Performance Analytics"]
+    },
+    {
+      title: "Software Architecture",
+      description: "Designing scalable, secure, and maintainable software systems tailored to your use cases and team structure.",
+      icon: <CubeIcon />,
+      features: ["System Design", "Scalability Planning", "Security Review", "Performance Optimization"]
+    },
+    {
+      title: "Product & MVP Planning",
+      description: "Helping startups and innovators validate, scope, and launch minimum viable products with speed and clarity.",
+      icon: <RocketLaunchIcon />,
+      features: ["Market Validation", "Feature Prioritization", "Rapid Prototyping", "Launch Strategy"]
+    }
+  ];
+
   return (
-    <div className="bg-rayora-gray-light">
-      <AnimatedSection animationType="fadeIn" className="!py-16 md:!py-20 bg-rayora-accent-indigo text-white">
-        <div className="text-center container-custom">
-          <h1 className="text-4xl md:text-5xl font-bold text-white">Expert Consulting Services</h1>
-          <p className="text-lg md:text-xl mt-4 max-w-3xl mx-auto text-indigo-100">
-            Leverage Rayora's deep expertise to navigate your digital journey and unlock new levels of organizational intelligence and efficiency.
+    <main className="bg-white text-gray-900">
+      {/* Hero Section */}
+      <section className="bg-gradient-to-br from-blue-50 via-white to-gray-50 py-20 px-6">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
+            Strategic Technology Consulting
+          </h1>
+          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+            Expert guidance to navigate digital transformation, adopt innovative technologies, and scale your business effectively.
           </p>
-        </div>
-      </AnimatedSection>
-
-      {consultingServices.map((service, index) => (
-        <AnimatedSection
-          key={service.id}
-          animationType="slideInUp"
-          className={`py-12 md:py-20 ${index % 2 === 0 ? 'bg-white' : 'bg-rayora-gray-light'}`}
-        >
-          <div className={`container-custom flex flex-col ${index % 2 === 0 ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-8 md:gap-12 lg:gap-16`}>
-            <div className="md:w-1/2">
-              {/* Placeholder for illustration */}
-              <div className="w-full h-64 sm:h-72 md:h-80 lg:h-96 bg-gray-200 rounded-xl shadow-lg flex items-center justify-center text-gray-500 mb-8 md:mb-0">
-                Illustrative Graphic for {service.title}
-              </div>
-            </div>
-            <div className="md:w-1/2">
-              <div className="mb-6 inline-block p-3 bg-gray-100 rounded-lg shadow-sm">
-                {service.icon}
-              </div>
-              <h2 className="mb-5">{service.title}</h2>
-              <p className="text-gray-700 leading-relaxed mb-6">{service.description}</p>
-              <ul className="space-y-3">
-                {service.points.map(point => (
-                  <li key={point} className="flex items-start">
-                    <CheckCircleIcon />
-                    <span className="text-gray-700">{point}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </AnimatedSection>
-      ))}
-
-      <AnimatedSection animationType="fadeIn" className="py-16 md:py-20 bg-white">
-        <div className="container-custom text-center">
-          <h2 className="mb-6">Use Cases & Success Stories</h2>
-          <p className="text-lg text-gray-600 mb-10 max-w-2xl mx-auto">
-            We are proud of the impact we've made. Discover how our consulting services have helped organizations like yours achieve remarkable results.
-            <br />
-            <em className="text-sm">(Detailed case studies and success stories will be featured here soon.)</em>
-          </p>
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-rayora-gray-light p-6 rounded-xl shadow-lg text-left hover:shadow-xl transition-shadow">
-              <h3 className="text-rayora-blue-primary mb-2">Case Study: Transforming Retail Operations</h3>
-              <p className="text-gray-600 text-sm">Learn how we guided a major retailer through a successful digital transformation, improving efficiency by 30% and enhancing customer engagement through integrated digital touchpoints.</p>
-            </div>
-            <div className="bg-rayora-gray-light p-6 rounded-xl shadow-lg text-left hover:shadow-xl transition-shadow">
-              <h3 className="text-rayora-teal-primary mb-2">Success Story: Enhancing Knowledge Sharing</h3>
-              <p className="text-gray-600 text-sm">Discover how a financial institution leveraged our KMS expertise to boost internal collaboration, reduce onboarding time for new employees, and foster a culture of continuous learning.</p>
-            </div>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/contact" className="inline-block px-8 py-4 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition font-medium">
+              Schedule a Consultation
+            </Link>
+            <Link href="/solutions" className="inline-block px-8 py-4 border-2 border-gray-300 text-gray-700 rounded-xl hover:border-gray-400 hover:bg-gray-50 transition font-medium">
+              View Our Solutions
+            </Link>
           </div>
         </div>
-      </AnimatedSection>
+      </section>
 
-      <AnimatedSection animationType="fadeIn" className="py-16 md:py-20 bg-rayora-blue-primary text-white">
-        <div className="container-custom text-center">
-          <h2 className="text-white mb-6">Ready to Elevate Your Strategy?</h2>
-          <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto text-blue-100">
-            Our expert consultants are ready to help you define and achieve your strategic objectives.
-          </p>
-          <Button href="/contact" variant="primary" size="lg" className="bg-white text-rayora-blue-primary hover:bg-rayora-gray-light shadow-xl">
-            Request a Consultation
-          </Button>
+      {/* Services Grid */}
+      <section className="py-20 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
+              Our Consulting Services
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              We combine technical expertise with business insight to provide holistic advice tailored to your unique needs.
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-8">
+            {consultingServices.map((service, index) => (
+              <div key={index} className="bg-white border border-gray-200 rounded-2xl p-8 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                <div className="flex items-center mb-6">
+                  <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600 mr-4">
+                    {service.icon}
+                  </div>
+                  <h3 className="text-2xl font-semibold text-gray-900">{service.title}</h3>
+                </div>
+                
+                <p className="text-gray-600 mb-6 leading-relaxed">
+                  {service.description}
+                </p>
+                
+                <div className="space-y-2">
+                  {service.features.map((feature, featureIndex) => (
+                    <div key={featureIndex} className="flex items-center text-sm text-gray-700">
+                      <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-3"></div>
+                      {feature}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-      </AnimatedSection>
-    </div>
+      </section>
+
+      {/* Process Section */}
+      <section className="bg-gray-50 py-20 px-6">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
+              Our Consulting Process
+            </h2>
+            <p className="text-lg text-gray-600">
+              A collaborative, transparent approach designed to deliver results
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-4 gap-8">
+            {[
+              { step: "01", title: "Discovery", desc: "We dive deep into your business challenges and goals" },
+              { step: "02", title: "Analysis", desc: "Comprehensive assessment of your current state and opportunities" },
+              { step: "03", title: "Strategy", desc: "Development of a tailored roadmap with clear milestones" },
+              { step: "04", title: "Implementation", desc: "Hands-on support to execute your transformation plan" }
+            ].map((item, index) => (
+              <div key={index} className="text-center">
+                <div className="w-16 h-16 bg-blue-500 text-white rounded-full flex items-center justify-center text-xl font-bold mb-4 mx-auto">
+                  {item.step}
+                </div>
+                <h3 className="text-xl font-semibold mb-2 text-gray-900">{item.title}</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="bg-blue-500 py-16 px-6 text-center text-white">
+        <div className="max-w-3xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            Ready to Transform Your Business?
+          </h2>
+          <p className="text-xl text-blue-100 mb-8">
+            Let&apos;s explore how we can support your next big idea or transformation.
+          </p>
+          <Link href="/contact" className="inline-block px-8 py-4 bg-white text-blue-500 rounded-xl hover:bg-gray-100 transition font-medium text-lg">
+            Start Your Consultation
+          </Link>
+        </div>
+      </section>
+    </main>
   );
-};
-
-export default ConsultingPage;
+}

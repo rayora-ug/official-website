@@ -1,29 +1,23 @@
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import '@/styles/globals.css';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+// src/app/layout.tsx
+import "../styles/globals.css";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
-const inter = Inter({ subsets: ['latin'], display: 'swap', variable: '--font-inter' });
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'Rayora - Empowering Progress Through Intelligent Digital Solutions',
-  description: 'Rayora empowers people and organizations through intelligent digital solutions. From scalable e-learning platforms and learning management systems to innovative e-commerce solutions, we design, develop, and operate software that drives progress.',
-  keywords: 'digital solutions, e-learning, lms, e-commerce, software development, digital transformation, knowledge management',
+  title: "Rayora – Empowering Digital Progress",
+  description: "Rayora builds intelligent digital solutions for e-learning, e-commerce, and enterprise platforms.",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} font-sans`}>
-      <body className={`bg-rayora-gray-light text-rayora-gray-dark flex flex-col min-h-screen antialiased`}>
+    <html lang="en" className="scroll-smooth">
+      <body className={inter.className + " text-gray-900 bg-white"}>
         <Navbar />
-        <main className="flex-grow container-custom mx-auto px-4 py-8"> {/* Updated to container-custom */}
-          {children}
-        </main>
+        <main>{children}</main>
         <Footer />
       </body>
     </html>

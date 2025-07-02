@@ -1,8 +1,8 @@
 # netlify.toml
 
 [build]
-  command = "npm run build" # This assumes "build": "next build" in package.json
-  publish = "out"           # The directory Next.js exports static sites to when output: 'export' is set
+  command = "npm run build" 
+  # Remove publish directory - let Netlify auto-detect for Next.js
 
 [build.environment]
   # Set any build-time environment variables here if needed
@@ -29,10 +29,8 @@
 
 # Netlify's Next.js runtime often handles plugin management well,
 # but you can specify a plugin version if needed.
-# [[plugins]]
-#   package = "@netlify/plugin-nextjs"
-#   # It's generally recommended to let Netlify use the latest version
-#   # version = "4.X.X"
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
 
 [dev]
   command = "npm run dev" # Command to start your dev server
