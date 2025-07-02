@@ -1,0 +1,58 @@
+/* src/styles/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== Base Global Styling ===== */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-white text-gray-900 antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply font-semibold tracking-tight;
+}
+
+p {
+  @apply text-gray-700 leading-relaxed;
+}
+
+a {
+  @apply text-blue-600 hover:underline;
+}
+
+button {
+  @apply transition duration-200 ease-in-out;
+}
+
+.container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+/* ===== Dark Mode Support ===== */
+.dark body {
+  @apply bg-gray-950 text-gray-100;
+}
+
+.dark p {
+  @apply text-gray-300;
+}
+
+.dark a {
+  @apply text-blue-400 hover:text-blue-300;
+}
+
+.dark header {
+  @apply bg-gray-900 border-gray-800;
+}
+
+.dark footer {
+  @apply bg-gray-900 text-gray-400;
+}
+
+.dark .card {
+  @apply bg-gray-800 text-gray-200;
+}
