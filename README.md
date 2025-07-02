@@ -51,8 +51,8 @@ Modern, responsive website for Rayora UG built with Next.js and Tailwind CSS.
 ### Installation
 ```bash
 # Clone the repository
-git clone https://github.com/rayora-ug/rayora-website.git
-cd rayora-website
+git clone https://github.com/rayora-ug/website.git
+cd website
 
 # Install dependencies
 npm install

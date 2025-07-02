@@ -3,12 +3,12 @@
 ## 🚀 Netlify Deployment Instructions
 
 ### Prerequisites
-- GitHub repository access to `rayora-ug/rayora-website`
+- GitHub repository access to `rayora-ug/website`
 - Netlify account
 - Domain `rayora.de` with DNS access
 
 ### Step 1: Repository Setup
-Once you have access to the `rayora-ug/rayora-website` repository:
+Once you have access to the `rayora-ug/website` repository:
 ```bash
 git push origin main
 ```
@@ -17,7 +17,7 @@ git push origin main
 
 1. **Go to [netlify.com](https://netlify.com)** and sign in
 2. **Click "Add new site" → "Import an existing project"**
-3. **Connect GitHub** and select `rayora-ug/rayora-website`
+3. **Connect GitHub** and select `rayora-ug/website`
 4. **Configure build settings:**
    - Build command: `npm run build`
    - Publish directory: `.next` (auto-detected)
