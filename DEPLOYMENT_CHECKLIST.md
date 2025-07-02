@@ -3,7 +3,7 @@
 ## ✅ **Deployment Checklist**
 
 ### **1. Repository Status**
-- ✅ **Repository**: Successfully transferred to `https://github.com/rayora-ug/website`
+- ✅ **Repository**: Successfully transferred to `https://github.com/rayora-ug/official-website`
 - ✅ **Code**: Complete website pushed to `main` branch
 - ✅ **Documentation**: Full README.md and DEPLOYMENT.md included
 - ✅ **Security**: Environment files properly configured
@@ -13,7 +13,7 @@
 #### **Step 1: Deploy to Netlify**
 1. Go to [netlify.com](https://netlify.com) and sign in
 2. Click **"Add new site" → "Import an existing project"**
-3. Connect **GitHub** and select `rayora-ug/website`
+3. Connect **GitHub** and select `rayora-ug/official-website`
 4. Netlify will auto-detect Next.js settings:
    - ✅ Build command: `npm run build`
    - ✅ Publish directory: `.next`
