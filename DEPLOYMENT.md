@@ -92,6 +92,35 @@ If the contact form doesn't send emails:
 2. Check Netlify Functions are enabled
 3. Verify domain is authorized in Resend dashboard
 
+### **Build Failures (Exit Code 2)**
+If you see "Build script returned non-zero exit code: 2":
+
+1. **Check Node.js Version**:
+   - Netlify should use Node.js 18.x (specified in `netlify.toml`)
+   - If using a different version, update the `NODE_VERSION` in build environment
+
+2. **Clear Netlify Cache**:
+   - Go to Netlify dashboard → Site settings → Build & deploy
+   - Click "Clear cache and deploy site"
+
+3. **Verify Package Dependencies**:
+   - Ensure all dependencies are properly listed in `package.json`
+   - Check for any missing peer dependencies
+
+4. **Check Build Environment Variables**:
+   - Environment variables might be missing or incorrectly set
+   - Verify `RESEND_API_KEY` is set (even if not used during build)
+
+5. **Try Manual Deploy with Debug**:
+   ```bash
+   # In Netlify build settings, temporarily change build command to:
+   npm ci && npm run build --verbose
+   ```
+
+6. **Branch Issues**:
+   - Ensure you're deploying from the correct branch (`main`)
+   - Check that the latest commits are pushed to the repository
+
 ## 📊 Site Features
 - ✅ Responsive design
 - ✅ Contact form with Resend integration
