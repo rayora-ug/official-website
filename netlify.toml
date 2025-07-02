@@ -1,0 +1,43 @@
+# netlify.toml
+
+[build]
+  command = "npm run build" 
+  # Remove publish directory - let Netlify auto-detect for Next.js
+
+[build.environment]
+  # Set any build-time environment variables here if needed
+  # NEXT_PUBLIC_API_URL = "https://api.example.com"
+
+# Optional: Redirects and rewrites
+# [[redirects]]
+#   from = "/old-path"
+#   to = "/new-path"
+#   status = 301
+
+# [[redirects]]
+#  from = "/*"
+#  to = "/index.html"
+#  status = 200
+
+# Optional: Custom headers
+# [[headers]]
+#   for = "/*"
+#   [headers.values]
+#     X-Frame-Options = "DENY"
+#     X-XSS-Protection = "1; mode=block"
+#     Content-Security-Policy = "frame-ancestors 'none'"
+
+# Netlify's Next.js runtime often handles plugin management well,
+# but you can specify a plugin version if needed.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[dev]
+  command = "npm run dev" # Command to start your dev server
+  port = 3000
+  publish = ".next" # Directory to serve files from during 'netlify dev' (if not using static export for dev)
+  # If you use `output: 'export'` for dev too, this might be 'out'
+  # but typically `next dev` uses the .next dir. Netlify dev might adapt.
+  # For Next.js with App Router, `netlify dev` often works best by letting it auto-detect.
+  # targetPort = 3000 # Port your dev server will run on
+  # autoLaunch = true # Launch browser on `netlify dev`
