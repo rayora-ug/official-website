@@ -57,8 +57,40 @@ This ensures visitors reach your site whether they type:
 The site is configured with:
 - **Framework**: Next.js 15.3.4
 - **Build Command**: `npm run build`
+- **Publish Directory**: `.next`
 - **Node Version**: 18.x (specified in `netlify.toml`)
 - **Redirects**: Configured for SPA routing
+
+## 🚨 Troubleshooting Common Issues
+
+### **404 "Page not found" Error**
+If you see a 404 error after deployment:
+
+1. **Check Netlify Build Logs**:
+   - Go to your Netlify dashboard
+   - Click on your site
+   - Go to "Deploys" tab
+   - Check the latest build log for errors
+
+2. **Verify Build Settings**:
+   - Build command: `npm run build`
+   - Publish directory: `.next`
+   - Functions directory: `netlify/functions` (auto-detected)
+
+3. **Redeploy After Configuration Update**:
+   - The `netlify.toml` file has been updated for proper Next.js support
+   - Push the latest changes and redeploy
+   - Or trigger a manual redeploy in Netlify dashboard
+
+4. **Check Environment Variables**:
+   - Ensure `RESEND_API_KEY` is set in Netlify
+   - Verify no typos in variable names
+
+### **Contact Form Not Working**
+If the contact form doesn't send emails:
+1. Verify `RESEND_API_KEY` is correctly set
+2. Check Netlify Functions are enabled
+3. Verify domain is authorized in Resend dashboard
 
 ## 📊 Site Features
 - ✅ Responsive design
