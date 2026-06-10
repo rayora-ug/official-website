@@ -13,12 +13,14 @@ const Footer = () => {
         <p className="text-sm text-gray-400 mb-4">
           &copy; {new Date().getFullYear()} Rayora UG. All rights reserved.
         </p>
-        <div className="flex justify-center space-x-4">
+        <div className="flex justify-center flex-wrap gap-4">
           <Link href="/solutions" className="text-xs text-gray-300 hover:text-blue-400 transition-colors">Solutions</Link>
           <Link href="/consulting" className="text-xs text-gray-300 hover:text-blue-400 transition-colors">Consulting</Link>
           <Link href="/about" className="text-xs text-gray-300 hover:text-blue-400 transition-colors">About</Link>
           <Link href="/contact" className="text-xs text-gray-300 hover:text-blue-400 transition-colors">Contact</Link>
-        </div>
+          <Link href="/impressum" className="text-xs text-gray-300 hover:text-blue-400 transition-colors">Impressum</Link>
+          <Link href="/datenschutz" className="text-xs text-gray-300 hover:text-blue-400 transition-colors">Datenschutz</Link>
+        </div>    
       </div>
     </footer>
   );
